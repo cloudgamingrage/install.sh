@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # URL of the licenses.txt file
 license_url="https://raw.githubusercontent.com/cloudgamingrage/install.sh/refs/heads/main/license.txt"  # Replace with your actual URL
 
@@ -22,14 +20,23 @@ if [ -z "$license_list" ]; then
     exit 1
 fi
 
+# Initialize a flag to track license validity
+valid_license=false
+
 # Validate the license
 echo "$license_list" | while IFS= read -r line; do
     line=$(echo "$line" | xargs)  # Trim leading/trailing whitespace
     if [ "$line" = "$user_license" ]; then
-        echo "Valid license found. Proceeding with the operation."
-        exit 0
+        valid_license=true
+        break  # Exit the loop as we found a valid license
     fi
 done
 
-echo "Invalid license. Aborting operation."
-exit 1
+# Check the validity flag
+if [ "$valid_license" = true ]; then
+    echo "Valid license found. Proceeding with the operation."
+    exit 0
+else
+    echo "Invalid license. Aborting operation."
+    exit 1
+fi
