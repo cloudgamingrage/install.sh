@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL of the licenses.txt file
-license_url="http://pricellium.rf.gd/license.txt"  # Replace with your actual URL
+license_url="https://raw.githubusercontent.com/cloudgamingrage/install.sh/refs/heads/main/license.txt"  # Replace with your actual URL
 
 # Prompt user for their license key
 read -p "Enter your license key: " user_license
