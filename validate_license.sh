@@ -22,14 +22,30 @@ if [ -z "$license_list" ]; then
     exit 1
 fi
 
-# Validate the license
-echo "$license_list" | while IFS= read -r line; do
+# Create a temporary file to hold the license list
+temp_file=$(mktemp)
+echo "$license_list" > "$temp_file"
+
+# Initialize a flag for valid license
+valid_license_found=false
+
+# Validate the license by checking each line in the temporary file
+while IFS= read -r line; do
     line=$(echo "$line" | xargs)  # Trim leading/trailing whitespace
     if [ "$line" = "$user_license" ]; then
         echo "Valid license found. Proceeding with the operation."
-        exit 0  # Exit immediately after a valid license is found
+        valid_license_found=true  # Set flag to true if a valid license is found
+        break  # Exit the loop immediately after finding a valid license
     fi
-done
+done < "$temp_file"  # Read from the temporary file
 
-echo "Invalid license. Aborting operation."
-exit 1
+# Clean up the temporary file
+rm "$temp_file"
+
+# Check if a valid license was found
+if [ "$valid_license_found" = true ]; then
+    exit 0  # Exit with success
+else
+    echo "Invalid license. Aborting operation."
+    exit 1  # Exit with error if no valid license was found
+fi
