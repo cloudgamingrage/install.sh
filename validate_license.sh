@@ -12,6 +12,7 @@ license_list=$(curl -s "$license_url")
 # Check if curl command succeeded
 if [ $? -ne 0 ]; then
     echo "Error: Could not fetch license list from $license_url."
+    echo "Please check your internet connection or the URL."
     exit 1
 fi
 
