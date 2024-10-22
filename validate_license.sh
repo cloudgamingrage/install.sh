@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL of the licenses.txt file
-license_url="http://pricellium.rf.gd/license.txt"  # Replace with your actual URL
+license_url="https://raw.githubusercontent.com/cloudgamingrage/install.sh/refs/heads/main/license.txt"  # Replace with your actual URL
 
 # Prompt user for their license key
 read -p "Enter your license key: " user_license
@@ -27,7 +27,7 @@ echo "$license_list" | while IFS= read -r line; do
     line=$(echo "$line" | xargs)  # Trim leading/trailing whitespace
     if [ "$line" = "$user_license" ]; then
         echo "Valid license found. Proceeding with the operation."
-        exit 0
+        exit 0  # Exit immediately after a valid license is found
     fi
 done
 
